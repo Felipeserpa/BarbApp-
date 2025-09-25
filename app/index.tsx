@@ -1,38 +1,21 @@
-import { Image } from "expo-image";
-import { Platform, StyleSheet, View, Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
-import { Link } from "expo-router";
-
-export default function HomeScreen() {
+export default function App() {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        padding: 16,
-      }}
-    >
-      <Text>Seja bem vido BarbAPP</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Olá Mundo 👋</Text>
     </View>
   );
 }
-
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: "row",
+  container: {
+    flex: 1,
+    justifyContent: "center",
     alignItems: "center",
-    gap: 8,
+    backgroundColor: "#1E40AF",
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: "absolute",
+  title: {
+    fontSize: 24,
+    color: "#fff",
   },
 });
