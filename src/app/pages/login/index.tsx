@@ -4,13 +4,16 @@ import {
   Image,
   KeyboardAvoidingView,
   Platform,
+  ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
+  View,
 } from "react-native";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 export default function Login() {
   const [email, setEmail] = React.useState("");
@@ -19,47 +22,70 @@ export default function Login() {
   const handleLogin = () => {
     console.log("Email:", email);
     console.log("Senha:", password);
-    // Aqui vai tua lógica de autenticação
+    // 🔐 lógica de autenticação aqui
+  };
+
+  const handleForgotPassword = () => {
+    console.log("Recuperar senha");
+    // 🔄 navegação ou lógica de recuperação
   };
 
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <Image
-        style={styles.heroImage}
-        source={{
-          uri: "https://lh3.googleusercontent.com/aida-public/AB6AXuCu_n7TFDKfvkpVLt16rqmk1D0SRtwca02YkhQL3rb22gac0xpbcJ4UHOg4BuGtfC_UOA_sQrhHtQCbAlHaCTCVaLq2Vj8F-DC40Zhq1yJQRL_5F9-aCbUOslx0ECuhMKseiP4ZBmJB0WwhenBoRFwemglecummNjv5IrNOKudxsazOxVER4R9BZFPuxzH_HCq_g4UzHkS-PEHT90y-NG76VXSZMvLMbj6kglYwNOoesntJKZnuwp5NlCuYukgQnM0ofX9jKX2Fmfk",
-        }}
-      />
+      <StatusBar barStyle="light-content" backgroundColor="#221610" />
 
-      <Text style={styles.title}>Faça Login na sua conta</Text>
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+      >
+        {/* 🖼️ Imagem de topo */}
+        <Image
+          style={styles.heroImage}
+          source={{
+            uri: "https://lh3.googleusercontent.com/aida-public/AB6AXuCu_n7TFDKfvkpVLt16rqmk1D0SRtwca02YkhQL3rb22gac0xpbcJ4UHOg4BuGtfC_UOA_sQrhHtQCbAlHaCTCVaLq2Vj8F-DC40Zhq1yJQRL_5F9-aCbUOslx0ECuhMKseiP4ZBmJB0WwhenBoRFwemglecummNjv5IrNOKudxsazOxVER4R9BZFPuxzH_HCq_g4UzHkS-PEHT90y-NG76VXSZMvLMbj6kglYwNOoesntJKZnuwp5NlCuYukgQnM0ofX9jKX2Fmfk",
+          }}
+          resizeMode="cover"
+        />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Digite seu email"
-        placeholderTextColor="#aaa"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
+        {/* 📦 Conteúdo */}
+        <View style={styles.formContainer}>
+          <Text style={styles.title}>Faça Login na sua conta</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Digite sua senha"
-        placeholderTextColor="#aaa"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <Text style={{ color: "#FF7F50", alignSelf: "flex-end" }}>
-        Esqueceu sua senha? <Text>Recuperar</Text>
-      </Text>
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Entrar</Text>
-      </TouchableOpacity>
+          <TextInput
+            style={styles.input}
+            placeholder="Digite seu email"
+            placeholderTextColor="#aaa"
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
+
+          <TextInput
+            style={styles.input}
+            placeholder="Digite sua senha"
+            placeholderTextColor="#aaa"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+          />
+
+          <TouchableOpacity
+            style={styles.forgotPassword}
+            onPress={handleForgotPassword}
+          >
+            <Text style={styles.forgotPasswordText}>Esqueceu sua senha?</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.button} onPress={handleLogin}>
+            <Text style={styles.buttonText}>Entrar</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 }
@@ -68,22 +94,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#221610",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 20,
   },
   heroImage: {
-    width: 450,
-    height: width * 0.8,
-    marginBottom: 20,
-    //resizeMode: "contain",
+    width: width,
+    height: height * 0.4, // ✅ ocupa o topo da tela
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+  },
+  formContainer: {
+    paddingHorizontal: 24,
+    paddingVertical: 30,
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     color: "#FFF",
-    marginBottom: 30,
     textAlign: "center",
+    marginBottom: 30,
   },
   input: {
     width: "100%",
@@ -95,6 +122,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#FFF",
   },
+  forgotPassword: {
+    alignSelf: "flex-end",
+    marginBottom: 30,
+  },
+  forgotPasswordText: {
+    color: "#FF7F50",
+    fontSize: 14,
+  },
   button: {
     width: "100%",
     height: 50,
@@ -102,7 +137,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 3,
   },
   buttonText: {
     color: "#FFF",
