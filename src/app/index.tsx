@@ -43,14 +43,14 @@ export default function Home() {
         <View style={styles.buttonContainer}>
           <Pressable
             style={styles.button}
-            onPress={() => router.push("/login")}
+            onPress={() => router.push("/pages/login")}
           >
             <Text style={styles.buttonText}>Login</Text>
           </Pressable>
 
           <Pressable
             style={[styles.button, styles.secondaryButton]}
-            onPress={() => router.push("/register")}
+            onPress={() => router.push("/pages/register")}
           >
             <Text style={styles.secondaryText}>Cadastrar-se</Text>
           </Pressable>
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     borderColor: "#4c4c8f",
   },
   secondaryText: {
-    color: "#4c4c8f",
+    color: "#FFF",
     fontSize: 18,
     fontWeight: "bold",
   },
