@@ -50,7 +50,7 @@ export default function Home() {
 
           <Pressable
             style={[styles.button, styles.secondaryButton]}
-            onPress={() => router.push("/pages/register")}
+            onPress={() => router.push("/pages/cadastro")}
           >
             <Text style={styles.secondaryText}>Cadastrar-se</Text>
           </Pressable>
