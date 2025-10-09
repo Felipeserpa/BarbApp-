@@ -1,6 +1,6 @@
-// app/index.tsx
+// app/index.tsx (Atualizado para Loading em Tela Cheia)
 import { useRouter } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import {
   Dimensions,
   Image,
@@ -10,22 +10,51 @@ import {
   Text,
   View,
 } from "react-native";
-
+// 👈 Importado o novo componente de loading em tela cheia
+import FullScreenLoading from "./components/FullScreenLoading";
 const { width } = Dimensions.get("window");
 
 export default function Home() {
   const router = useRouter();
 
+  // 👈 Estado ÚNICO para controlar o loading de TELA CHEIA
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState(""); // Mensagem dinâmica
+
+  // Função que simula o Login e o carregamento
+  const handleLogin = () => {
+    setLoadingMessage("Efetuando login..."); // Define a mensagem
+    setIsProcessing(true); // Ativa o overlay
+
+    // Simula uma chamada de API de 2 segundos
+    setTimeout(() => {
+      setIsProcessing(false); // Desativa o overlay
+      router.push("/pages/login");
+    }, 2000);
+  };
+
+  // Função que simula o Cadastro e o carregamento
+  const handleRegister = () => {
+    setLoadingMessage("Criando sua conta..."); // Define a mensagem
+    setIsProcessing(true); // Ativa o overlay
+
+    // Simula uma chamada de API de 3 segundos
+    setTimeout(() => {
+      setIsProcessing(false); // Desativa o overlay
+      router.push("/pages/cadastro");
+    }, 3000);
+  };
+
   return (
+    // ⚠️ Importante: O container principal precisa ter flex: 1
     <View style={styles.container}>
       <StatusBar backgroundColor="#4c4c8f" barStyle="light-content" />
 
-      {/* Header */}
+      {/* Header e Conteúdo da Tela */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>BarbApp</Text>
       </View>
 
-      {/* Hero Image */}
       <Image
         style={styles.heroImage}
         source={{
@@ -33,7 +62,6 @@ export default function Home() {
         }}
       />
 
-      {/* Content */}
       <View style={styles.content}>
         <Text style={styles.title}>Agendamento de Barbearia</Text>
         <Text style={styles.subtitle}>
@@ -41,28 +69,42 @@ export default function Home() {
         </Text>
 
         <View style={styles.buttonContainer}>
+          {/* BOTÃO DE LOGIN */}
           <Pressable
-            style={styles.button}
-            onPress={() => router.push("/pages/login")}
+            style={[
+              styles.button,
+              isProcessing && styles.buttonDisabled, // Desabilita visualmente
+            ]}
+            onPress={handleLogin}
+            disabled={isProcessing} // Desabilita funcionalmente
           >
             <Text style={styles.buttonText}>Login</Text>
           </Pressable>
 
+          {/* BOTÃO DE CADASTRO */}
           <Pressable
-            style={[styles.button, styles.secondaryButton]}
-            onPress={() => router.push("/pages/cadastro")}
+            style={[
+              styles.button,
+              styles.secondaryButton,
+              isProcessing && styles.buttonDisabled, // Desabilita visualmente
+            ]}
+            onPress={handleRegister}
+            disabled={isProcessing} // Desabilita funcionalmente
           >
             <Text style={styles.secondaryText}>Cadastrar-se</Text>
           </Pressable>
         </View>
       </View>
+
+      {/* 👈 COMPONENTE DE LOADING DE TELA CHEIA (Renderizado por último) */}
+      <FullScreenLoading isVisible={isProcessing} message={loadingMessage} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1, // Crucial para o FullScreenLoading funcionar corretamente
     backgroundColor: "#221610",
   },
   header: {
@@ -110,6 +152,8 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderRadius: 10,
     alignItems: "center",
+    justifyContent: "center",
+    minHeight: 50,
   },
   buttonText: {
     color: "#FFF",
@@ -125,5 +169,8 @@ const styles = StyleSheet.create({
     color: "#FFF",
     fontSize: 18,
     fontWeight: "bold",
+  },
+  buttonDisabled: {
+    opacity: 0.5, // Diminui a opacidade quando desabilitado
   },
 });

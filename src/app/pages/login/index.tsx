@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Dimensions,
+  GestureResponderEvent,
   Image,
   KeyboardAvoidingView,
   Platform,
@@ -23,12 +24,15 @@ export default function Login() {
     console.log("Email:", email);
     console.log("Senha:", password);
     // 🔐 lógica de autenticação aqui
-  };
 
-  const handleForgotPassword = () => {
-    console.log("Recuperar senha");
-    // 🔄 navegação ou lógica de recuperação
+    const handleForgotPassword = () => {
+      console.log("Recuperar senha");
+      // 🔄 navegação ou lógica de recuperação
+    };
   };
+  function handleForgotPassword(event: GestureResponderEvent): void {
+    throw new Error("Function not implemented.");
+  }
 
   return (
     <KeyboardAvoidingView
