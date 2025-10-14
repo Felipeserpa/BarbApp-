@@ -14,16 +14,21 @@ import {
   View,
 } from "react-native";
 
+import { useRouter } from "expo-router";
 const { width, height } = Dimensions.get("window");
 
 export default function Login() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
+  const router = useRouter();
+
   const handleLogin = () => {
     console.log("Email:", email);
     console.log("Senha:", password);
     // 🔐 lógica de autenticação aqui
+
+    router.replace("/agenda"); // Navega para a tela principal após o login
 
     const handleForgotPassword = () => {
       console.log("Recuperar senha");
