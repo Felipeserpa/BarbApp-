@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import React from "react";
 import {
   Dimensions,
@@ -14,58 +15,56 @@ import {
   View,
 } from "react-native";
 
-import { useRouter } from "expo-router";
+// Obtém dimensões da tela
 const { width, height } = Dimensions.get("window");
 
-export default function Login() {
+export default function Cadastro() {
+  const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
-  const router = useRouter();
-
-  const handleLogin = () => {
-    console.log("Email:", email);
-    console.log("Senha:", password);
-    // 🔐 lógica de autenticação aqui
-
-    router.replace("/agenda"); // Navega para a tela principal após o login
-
-    const handleForgotPassword = () => {
-      console.log("Recuperar senha");
-      // 🔄 navegação ou lógica de recuperação
-    };
+  const handleForgotPassword = () => {
+    console.log("Recuperar senha");
+    // 🔄 navegação ou lógica de recuperação
   };
-  function handleForgotPassword(event: GestureResponderEvent): void {
+
+  function handleLogin(event: GestureResponderEvent): void {
     throw new Error("Function not implemented.");
   }
 
   return (
     <KeyboardAvoidingView
-      style={styles.container}
+      style={Styles.container}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <StatusBar barStyle="light-content" backgroundColor="#221610" />
-
       <ScrollView
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
       >
-        {/* 🖼️ Imagem de topo */}
         <Image
-          style={styles.heroImage}
+          style={{ width: width, height: height * 0.3 }}
           source={{
             uri: "https://lh3.googleusercontent.com/aida-public/AB6AXuCu_n7TFDKfvkpVLt16rqmk1D0SRtwca02YkhQL3rb22gac0xpbcJ4UHOg4BuGtfC_UOA_sQrhHtQCbAlHaCTCVaLq2Vj8F-DC40Zhq1yJQRL_5F9-aCbUOslx0ECuhMKseiP4ZBmJB0WwhenBoRFwemglecummNjv5IrNOKudxsazOxVER4R9BZFPuxzH_HCq_g4UzHkS-PEHT90y-NG76VXSZMvLMbj6kglYwNOoesntJKZnuwp5NlCuYukgQnM0ofX9jKX2Fmfk",
           }}
           resizeMode="cover"
         />
+        <View style={Styles.formContainer}>
+          <Text style={Styles.title}>Faça Cadastro na sua conta</Text>
 
-        {/* 📦 Conteúdo */}
-        <View style={styles.formContainer}>
-          <Text style={styles.title}>Faça Login na sua conta</Text>
+          {/* Campos de entrada e botões de cadastro aqui */}
+          <TextInput
+            style={Styles.input}
+            placeholder="Digite seu nome"
+            placeholderTextColor="#aaa"
+            value={name}
+            onChangeText={setName}
+            autoCapitalize="words"
+          />
 
           <TextInput
-            style={styles.input}
+            style={Styles.input}
             placeholder="Digite seu email"
             placeholderTextColor="#aaa"
             value={email}
@@ -75,7 +74,7 @@ export default function Login() {
           />
 
           <TextInput
-            style={styles.input}
+            style={Styles.input}
             placeholder="Digite sua senha"
             placeholderTextColor="#aaa"
             value={password}
@@ -84,31 +83,35 @@ export default function Login() {
           />
 
           <TouchableOpacity
-            style={styles.forgotPassword}
+            style={Styles.forgotPassword}
             onPress={handleForgotPassword}
           >
-            <Text style={styles.forgotPasswordText}>Esqueceu sua senha?</Text>
+            <Text style={{ color: "#FFF", marginTop: 10 }}>
+              Já tem uma conta?{" "}
+              <Text
+                style={{ color: "#FF7F50" }}
+                onPress={() => {
+                  router.push("/login");
+                  /* navegação para login */
+                }}
+              >
+                Faça login
+              </Text>
+            </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.button} onPress={handleLogin}>
-            <Text style={styles.buttonText}>Entrar</Text>
+          <TouchableOpacity style={Styles.button} onPress={handleLogin}>
+            <Text style={Styles.buttonText}>Entrar</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
   );
 }
-
-const styles = StyleSheet.create({
+const Styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#221610",
-  },
-  heroImage: {
-    width: width,
-    height: height * 0.4, // ✅ ocupa o topo da tela
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
   },
   formContainer: {
     paddingHorizontal: 24,
@@ -117,7 +120,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#FFF",
+    color: "#fff",
     textAlign: "center",
     marginBottom: 30,
   },

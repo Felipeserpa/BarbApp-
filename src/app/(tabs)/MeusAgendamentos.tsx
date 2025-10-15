@@ -1,10 +1,10 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-export default function Perfil() {
+export default function MeusAgendamentos() {
   return (
     <View>
-      <Text>Perfil</Text>
+      <Text>Meus Agendamentos</Text>
     </View>
   );
 }
