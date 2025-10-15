@@ -11,7 +11,7 @@ import {
   View,
 } from "react-native";
 // 👈 Importado o novo componente de loading em tela cheia
-import FullScreenLoading from "./components/FullScreenLoading";
+import FullScreenLoading from "../components/FullScreenLoading";
 const { width } = Dimensions.get("window");
 
 export default function Home() {
@@ -29,7 +29,7 @@ export default function Home() {
     // Simula uma chamada de API de 2 segundos
     setTimeout(() => {
       setIsProcessing(false); // Desativa o overlay
-      router.push("/pages/login");
+      router.push("/login");
     }, 2000);
   };
 
@@ -41,7 +41,7 @@ export default function Home() {
     // Simula uma chamada de API de 3 segundos
     setTimeout(() => {
       setIsProcessing(false); // Desativa o overlay
-      router.push("/pages/cadastro");
+      router.push("/cadastro");
     }, 3000);
   };
 
