@@ -1,7 +1,6 @@
 import { FontAwesome } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import React from "react";
-import { StatusBar } from "react-native";
 
 export default function Layout() {
   return (
@@ -25,11 +24,9 @@ export default function Layout() {
             ),
           }}
         />
-        <Tabs.Screen name="MeusAgendamentos" options={{ headerShown: false }} />
-        <Tabs.Screen name="Barbeiros" options={{ headerShown: false }} />
+        <Tabs.Screen name="Agendamentos" options={{ headerShown: true }} />
         <Tabs.Screen name="Perfil" options={{ headerShown: false }} />
       </Tabs>
-      <StatusBar barStyle="light-content" backgroundColor="#221610" />
     </>
   );
 }
